@@ -75,6 +75,16 @@ export interface DynamicZoneBrands extends Struct.ComponentSchema {
   };
 }
 
+export interface DynamicZoneContent extends Struct.ComponentSchema {
+  collectionName: 'components_dynamic_zone_contents';
+  info: {
+    displayName: 'Content';
+  };
+  attributes: {
+    content: Schema.Attribute.Blocks;
+  };
+}
+
 export interface DynamicZoneCta extends Struct.ComponentSchema {
   collectionName: 'components_dynamic_zone_ctas';
   info: {
@@ -513,6 +523,7 @@ declare module '@strapi/strapi' {
       'cards.ray-card': CardsRayCard;
       'cards.social-media-card': CardsSocialMediaCard;
       'dynamic-zone.brands': DynamicZoneBrands;
+      'dynamic-zone.content': DynamicZoneContent;
       'dynamic-zone.cta': DynamicZoneCta;
       'dynamic-zone.faq': DynamicZoneFaq;
       'dynamic-zone.features': DynamicZoneFeatures;

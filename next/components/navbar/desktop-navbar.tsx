@@ -40,14 +40,27 @@ export const DesktopNavbar = ({ leftNavbarItems, rightNavbarItems, logo, locale 
       setShowBackground(false);
     }
   });
+
   return (
     <motion.div
       className={cn(
-        "w-full flex relative justify-between px-4 py-3 rounded-md  transition duration-200 bg-transparent mx-auto"
+        "w-full flex relative justify-between px-4 py-3 rounded-full transition duration-200 bg-transparent mx-auto"
       )}
       animate={{
+        /* 1. Width Animation: Shrinks to 80% for that "Floating Pill" look */
         width: showBackground ? "80%" : "100%",
-        background: showBackground ? "var(--neutral-900)" : "transparent",
+        
+        /* 2. Glassmorphism Background: Afyascope Navy with 80% Opacity */
+        background: showBackground ? "rgba(0, 31, 63, 0.8)" : "transparent",
+        
+        /* 3. The Blur Effect */
+        backdropFilter: showBackground ? "blur(12px)" : "blur(0px)",
+        
+        /* 4. Subtle White Border for "Glass Edge" */
+        border: showBackground ? "1px solid rgba(255, 255, 255, 0.1)" : "1px solid transparent",
+        
+        /* 5. Shadow for depth */
+        boxShadow: showBackground ? "0px 10px 30px rgba(0,0,0,0.2)" : "none"
       }}
       transition={{
         duration: 0.4,
@@ -62,7 +75,8 @@ export const DesktopNavbar = ({ leftNavbarItems, rightNavbarItems, logo, locale 
             transition={{
               duration: 1,
             }}
-            className="absolute inset-0 h-full w-full bg-neutral-900 pointer-events-none [mask-image:linear-gradient(to_bottom,white,transparent,white)] rounded-full"
+            /* Changed bg-neutral-900 to bg-charcoal to match your theme */
+            className="absolute inset-0 h-full w-full bg-charcoal pointer-events-none [mask-image:linear-gradient(to_bottom,white,transparent,white)] rounded-full opacity-50"
           />
         )}
       </AnimatePresence>
@@ -80,7 +94,13 @@ export const DesktopNavbar = ({ leftNavbarItems, rightNavbarItems, logo, locale 
         <LocaleSwitcher currentLocale={locale} />
 
         {rightNavbarItems.map((item, index) => (
-          <Button key={item.text} variant={index === rightNavbarItems.length - 1 ? 'primary' : 'simple'} as={Link} href={`/${locale}${item.URL}`}>
+          <Button 
+            key={item.text} 
+            /* Logic: Last item is Primary (Coral Red), others are Simple/Glass */
+            variant={index === rightNavbarItems.length - 1 ? 'primary' : 'simple'} 
+            as={Link} 
+            href={`/${locale}${item.URL}`}
+          >
             {item.text}
           </Button>
         ))}

@@ -26,10 +26,16 @@ export const Heading = ({
   return (
     <Tag
       className={cn(
-        "text-3xl md:text-5xl md:leading-tight max-w-5xl mx-auto text-center tracking-tight",
-        "font-medium",
-        "bg-clip-text text-transparent bg-gradient-to-b from-neutral-800 via-white to-white",
+        /* Base Layout Styles */
+        "max-w-5xl mx-auto text-center tracking-tight",
+        
+        /* Afyascope Brand Typography */
+        "font-primary font-bold text-white",
+        
+        /* Size Variant */
         sizeVariants[size],
+        
+        /* Allow overrides via className */
         className
       )}
       {...props}

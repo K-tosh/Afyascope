@@ -1,7 +1,8 @@
 import React from 'react'
 
 import { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+/* 1. Import BOTH fonts */
+import { Inter, Montserrat } from 'next/font/google';
 import { generateMetadataObject } from '@/lib/shared/metadata';
 
 import { Footer } from '@/components/footer';
@@ -11,10 +12,20 @@ import { cn } from '@/lib/utils';
 import { ViewTransitions } from 'next-view-transitions';
 import fetchContentType from '@/lib/strapi/fetchContentType';
 
+/* 2. Configure Inter (Body Font) */
 const inter = Inter({
     subsets: ["latin"],
     display: "swap",
-    weight: ["400", "500", "600", "700", "800", "900"],
+    variable: "--font-inter", // Matches tailwind.config.ts
+    weight: ["400", "500", "600", "700"],
+});
+
+/* 3. Configure Montserrat (Heading Font) */
+const montserrat = Montserrat({
+    subsets: ["latin"],
+    display: "swap",
+    variable: "--font-montserrat", // Matches tailwind.config.ts
+    weight: ["500", "600", "700", "800"],
 });
 
 // Default Global SEO for pages without them
@@ -46,14 +57,19 @@ export default async function LocaleLayout({
 }) {
 
     const pageData = await fetchContentType('global', { filters: { locale } }, true);
+    
     return (
-        <html lang={locale}>
+        /* 4. Add bg-charcoal here to ensure full coverage */
+        <html lang={locale} className="bg-charcoal h-full">
             <ViewTransitions>
                 <CartProvider>
                     <body
                         className={cn(
-                            inter.className,
-                            "bg-charcoal antialiased h-full w-full"
+                            /* Inject both font variables */
+                            inter.variable,
+                            montserrat.variable,
+                            /* Force the background and primary font */
+                            "bg-charcoal antialiased h-full w-full font-secondary text-white"
                         )}
                     >
                         <Navbar data={pageData.navbar} locale={locale} />

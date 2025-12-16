@@ -34,6 +34,10 @@ export interface AdminApiToken extends Struct.CollectionTypeSchema {
         minLength: 1;
       }> &
       Schema.Attribute.DefaultTo<''>;
+    encryptedKey: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 1;
+      }>;
     expiresAt: Schema.Attribute.DateTime;
     lastUsedAt: Schema.Attribute.DateTime;
     lifespan: Schema.Attribute.BigInteger;
@@ -698,6 +702,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'dynamic-zone.cta',
         'dynamic-zone.form-next-to-section',
         'dynamic-zone.faq',
+        'dynamic-zone.content',
       ]
     > &
       Schema.Attribute.SetPluginOptions<{

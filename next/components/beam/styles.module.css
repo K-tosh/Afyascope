@@ -12,10 +12,15 @@
   transform: translateY(-50%);
   width: var(--meteor-width, 50px);
   height: 1px;
+  
+  /* UPDATED GRADIENT FOR AFYASCOPE */
   background: linear-gradient(
     90deg,
-    var(--cyan-500),
-    var(--blue-500),
+    /* Head: Afyascope Cyan (High Tech) */
+    #00c2cb,
+    /* Body: Fades to white (Clinical/Data look) */
+    rgba(255, 255, 255, 0.4),
+    /* Tail: Fades out completely */
     transparent
   );
 }

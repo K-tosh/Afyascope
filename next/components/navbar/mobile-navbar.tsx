@@ -44,7 +44,8 @@ export const MobileNavbar = ({ leftNavbarItems, rightNavbarItems, logo, locale }
       className={cn(
         "flex justify-between bg-transparent items-center w-full rounded-md px-2.5 py-1.5 transition duration-200",
         showBackground &&
-        " bg-neutral-900  shadow-[0px_-2px_0px_0px_var(--neutral-800),0px_2px_0px_0px_var(--neutral-800)]"
+        /* CHANGED: Used bg-charcoal (Navy) instead of neutral-900 for brand consistency */
+        " bg-charcoal shadow-[0px_-2px_0px_0px_var(--neutral-800),0px_2px_0px_0px_var(--neutral-800)]"
       )}
     >
       <Logo image={logo?.image} />
@@ -55,7 +56,11 @@ export const MobileNavbar = ({ leftNavbarItems, rightNavbarItems, logo, locale }
       />
 
       {open && (
-        <div className="fixed inset-0 bg-black z-50 flex flex-col items-start justify-start space-y-10  pt-5  text-xl text-zinc-600  transition duration-200 hover:text-zinc-800">
+        <div className={cn(
+            "fixed inset-0 z-50 flex flex-col items-start justify-start space-y-10 pt-5 text-xl transition duration-200",
+            /* CHANGED: Used bg-charcoal to make the full menu Navy Blue */
+            "bg-charcoal text-neutral-200"
+        )}>
           <div className="flex items-center justify-between w-full px-5">
             <Logo locale={locale} image={logo?.image} />
             <div className="flex items-center space-x-2">
@@ -68,17 +73,17 @@ export const MobileNavbar = ({ leftNavbarItems, rightNavbarItems, logo, locale }
           </div>
           <div className="flex flex-col items-start justify-start gap-[14px] px-8">
             {leftNavbarItems.map((navItem: any, idx: number) => (
-              <>
+              <div key={`nav-item-${idx}`}>
                 {navItem.children && navItem.children.length > 0 ? (
                   <>
-                    {navItem.children.map((childNavItem: any, idx: number) => (
+                    {navItem.children.map((childNavItem: any, cIdx: number) => (
                       <Link
-                        key={`link=${idx}`}
+                        key={`child-link=${cIdx}`}
                         href={`/${locale}${childNavItem.URL}`}
                         onClick={() => setOpen(false)}
                         className="relative max-w-[15rem] text-left text-2xl"
                       >
-                        <span className="block text-white">
+                        <span className="block text-white font-primary font-bold">
                           {childNavItem.text}
                         </span>
                       </Link>
@@ -91,17 +96,22 @@ export const MobileNavbar = ({ leftNavbarItems, rightNavbarItems, logo, locale }
                     onClick={() => setOpen(false)}
                     className="relative"
                   >
-                    <span className="block text-[26px] text-white">
+                    <span className="block text-[26px] text-white font-primary font-bold">
                       {navItem.text}
                     </span>
                   </Link>
                 )}
-              </>
+              </div>
             ))}
           </div>
-          <div className="flex flex-row w-full items-start gap-2.5  px-8 py-4 ">
+          <div className="flex flex-row w-full items-start gap-2.5 px-8 py-4 ">
             {rightNavbarItems.map((item, index) => (
-              <Button key={item.text} variant={index === rightNavbarItems.length - 1 ? 'primary' : 'simple'} as={Link} href={`/${locale}${item.URL}`}>
+              <Button 
+                key={item.text} 
+                variant={index === rightNavbarItems.length - 1 ? 'primary' : 'outline'} 
+                as={Link} 
+                href={`/${locale}${item.URL}`}
+              >
                 {item.text}
               </Button>
             ))}

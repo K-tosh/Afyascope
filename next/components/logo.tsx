@@ -20,8 +20,8 @@ export const Logo = ({ image, locale }: { image?: Image, locale?: string }) => {
           height={200}
           className="h-10 w-10 rounded-xl mr-2"
         />
-
-        <span className="text-white font-bold">LaunchPad</span>
+        
+        <span className="font-bold"><span className="text-white">Afya</span><span className="text-secondary">scope</span></span>
       </Link>
     );
   }
