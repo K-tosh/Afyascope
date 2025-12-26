@@ -134,7 +134,7 @@ export const Quote = ({
 }) => {
   return (
     <h3 className={cn("text-lg font-secondary font-medium text-neutral-200 leading-relaxed italic", className)}>
-      &ldquo;{children}&rdquo;
+      &quot;{children}&quot;
     </h3>
   );
 };

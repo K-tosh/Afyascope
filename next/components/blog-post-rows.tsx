@@ -45,7 +45,7 @@ export const BlogPostRows = ({ articles }: { articles: Article[] }) => {
       <div className="divide-y divide-white/5">
         {results.length === 0 ? (
           <div className="py-12 text-center bg-neutral-900/50 rounded-xl border border-dashed border-white/10">
-            <p className="text-neutral-400">No articles found matching &ldquo;{search}&rdquo;</p>
+            <p className="text-neutral-400">No articles found matching &quot;{search}&quot;</p>
           </div>
         ) : (
           results.map((article, index) => (
