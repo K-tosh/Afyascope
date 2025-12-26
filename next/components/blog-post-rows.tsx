@@ -5,7 +5,7 @@ import { Link } from "next-view-transitions";
 import React, { useEffect, useState } from "react";
 import FuzzySearch from "fuzzy-search";
 import { Article } from "@/types/types";
-import { IconSearch } from "@tabler/icons-react"; // Optional: Add a search icon if available
+import { IconSearch } from "@tabler/icons-react"; 
 
 export const BlogPostRows = ({ articles }: { articles: Article[] }) => {
   const [search, setSearch] = useState("");
@@ -45,7 +45,8 @@ export const BlogPostRows = ({ articles }: { articles: Article[] }) => {
       <div className="divide-y divide-white/5">
         {results.length === 0 ? (
           <div className="py-12 text-center bg-neutral-900/50 rounded-xl border border-dashed border-white/10">
-            <p className="text-neutral-400">No articles found matching "{search}"</p>
+            {/* FIX: Replaced " with &quot; to fix the build error */}
+            <p className="text-neutral-400">No articles found matching &quot;{search}&quot;</p>
           </div>
         ) : (
           results.map((article, index) => (
@@ -98,7 +99,7 @@ export const BlogPostRow = ({ article }: { article: Article }) => {
         </div>
       </div>
 
-      {/* Optional: Arrow Icon on the right to indicate clickable */}
+      {/* Arrow Icon on the right */}
       <div className="hidden md:block opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 text-cyan-400">
          <IconArrowRight className="w-5 h-5" />
       </div>
@@ -106,7 +107,7 @@ export const BlogPostRow = ({ article }: { article: Article }) => {
   );
 };
 
-// Simple Arrow Icon Component needed for the row
+// Simple Arrow Icon Component
 const IconArrowRight = ({ className }: { className?: string }) => (
   <svg 
     xmlns="http://www.w3.org/2000/svg" 

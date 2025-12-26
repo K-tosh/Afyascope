@@ -10,22 +10,29 @@ export const Brands = ({ heading, sub_heading, logos }: { heading: string, sub_h
   
   // 1. Initial Logic to split logos
   const safeLogos = Array.isArray(logos) ? logos : [];
+  
+  // 2. State setup
+  // We initialize state lazily or with default empty/split to prevent hydration mismatch if possible,
+  // but your current setup works fine for client components.
   const middleIndex = Math.floor(safeLogos.length / 2);
   const firstHalf = safeLogos.slice(0, middleIndex);
   const secondHalf = safeLogos.slice(middleIndex);
-  
-  // 2. State setup
+
   const [stateLogos, setLogos] = useState([firstHalf, secondHalf]);
   const [activeLogoSet, setActiveLogoSet] = useState(firstHalf);
 
-  // 3. CRITICAL FIX: Update state when 'logos' prop changes (e.g. after API load)
+  // 3. CRITICAL FIX: Update state when 'logos' prop changes
   useEffect(() => {
     const mid = Math.floor(safeLogos.length / 2);
     const first = safeLogos.slice(0, mid);
     const second = safeLogos.slice(mid);
     setLogos([first, second]);
     setActiveLogoSet(first);
-  }, [logos]); // Runs whenever Strapi data updates
+    
+    // FIX: We disable the warning here because 'safeLogos' is derived from 'logos'.
+    // Adding 'safeLogos' to the array would cause an infinite loop.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [logos]); 
 
   // 4. The Flip Logic
   useEffect(() => {
@@ -53,28 +60,27 @@ export const Brands = ({ heading, sub_heading, logos }: { heading: string, sub_h
         <AnimatePresence mode="popLayout">
           {activeLogoSet.map((logo, idx) => (
             <motion.div
-              /* THE SMOOTH TRANSITION YOU LIKED */
               initial={{
-                y: 40,              // Start below
+                y: 40,
                 opacity: 0,
-                filter: "blur(10px)", // Start blurry
+                filter: "blur(10px)",
               }}
               animate={{
-                y: 0,               // Slide to center
+                y: 0,
                 opacity: 1,
-                filter: "blur(0px)",  // Become clear
+                filter: "blur(0px)",
               }}
               exit={{
-                y: -40,             // Slide up
+                y: -40,
                 opacity: 0,
-                filter: "blur(10px)", // Blur out
+                filter: "blur(10px)",
               }}
               transition={{
                 duration: 0.8,
-                delay: 0.1 * idx,   // Stagger for "wave" effect
+                delay: 0.1 * idx,
                 ease: [0.4, 0, 0.2, 1],
               }}
-              key={logo.id || idx} // Use ID if available, else Index
+              key={logo.id || idx}
               className="relative"
             >
               <Image
@@ -82,7 +88,6 @@ export const Brands = ({ heading, sub_heading, logos }: { heading: string, sub_h
                 alt={logo.image.alternativeText || "Brand"}
                 width={400}
                 height={400}
-                /* Original Sizes & Colors */
                 className="md:h-20 md:w-60 h-10 w-40 object-contain filter"
                 draggable={false}
               />
