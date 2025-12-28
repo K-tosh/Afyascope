@@ -11,6 +11,8 @@ import { CartProvider } from '@/context/cart-context';
 import { cn } from '@/lib/utils';
 import { ViewTransitions } from 'next-view-transitions';
 import fetchContentType from '@/lib/strapi/fetchContentType';
+import { Analytics } from '@vercel/analytics/react';
+
 
 /* 2. Configure Inter (Body Font) */
 const inter = Inter({
