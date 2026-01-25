@@ -6,10 +6,10 @@ export default ({ env }: { env: any }) => {
   const connections = {
     postgres: {
       connection: {
-        // This line is the magic fix for Railway
+        // This pulls the entire connection string from Railway
         connectionString: env('DATABASE_URL'),
         ssl: env.bool('DATABASE_SSL', false) && {
-          rejectUnauthorized: false, // Required for Railway/managed Postgres
+          rejectUnauthorized: false, // Allows connection to Railway's managed DB
         },
       },
       pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
